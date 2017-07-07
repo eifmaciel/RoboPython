@@ -2,13 +2,14 @@
 
 import sys, pygame, os
 pygame.init()
-import driver
 
 score = [0,0]
 size = width, height = 250, 250
 screen = pygame.display.set_mode(size)
 black = 0,0,0
 WHITE = 255, 255, 255
+
+DEVICE_NAME = "/dev/robo"
 
 class ArowUP(pygame.sprite.Sprite):
     def __init__(self):
@@ -51,6 +52,15 @@ def load_image(name):
         raise SystemExit, message
     return image, image.get_rect()
 
+def writeDriver(word):
+    file = open(DEVICE_NAME, 'w');
+
+    if (file > 0):
+        file.write(word)
+        file.close()
+
+    return 1
+
 def main():
    
     left = Arowleft()
@@ -68,22 +78,25 @@ def main():
     pygame.display.flip()
     done = True
 
-    while done==True:
+    while True:
         for event in pygame.event.get():
             pass
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            break
         
         key_pressed = pygame.key.get_pressed()
         if key_pressed[pygame.K_UP]:
-            Driver.writeDriver('u')
+            writeDriver('u')
         elif key_pressed[pygame.K_DOWN]:
-            Driver.writeDriver('d')        
+            writeDriver('d')        
         elif key_pressed[pygame.K_LEFT]:
-            Driver.writeDriver('l')
+            writeDriver('l')
         elif key_pressed[pygame.K_RIGHT]:
-            Driver.writeDriver('r')    
+            writeDriver('r')    
              
        
-        clock.tick(20)
+        clock.tick(60)
         # cc =raw_input()
         # done = False
 

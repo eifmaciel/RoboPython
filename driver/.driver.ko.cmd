@@ -1,1 +1,0 @@
-cmd_/home/eliane/Robo/driver/driver.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-3.13.0-123-generic/scripts/module-common.lds --build-id  -o /home/eliane/Robo/driver/driver.ko /home/eliane/Robo/driver/driver.o /home/eliane/Robo/driver/driver.mod.o

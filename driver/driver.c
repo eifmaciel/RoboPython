@@ -2,7 +2,7 @@
 #include <linux/module.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
-#include "driver.h"
+
 /*----------------------------------------------------------------------------*/
 #define DEVICE 60
 #define DEVICE_NAME "robot"
@@ -64,8 +64,9 @@ static int device_open(struct inode *inode, struct file *file)
 		return -EBUSY;
 	}
 	is_open = 1;
-  ptr = message;
+    ptr = message;
 	try_module_get(THIS_MODULE);
+	printk("O dispositivo %d foi aberto.\n", DEVICE);
 	return 0;
 }
 

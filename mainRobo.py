@@ -10,6 +10,8 @@ size = width, height = 600, 400
 screen = pygame.display.set_mode(size)
 black = 0,0,0
 WHITE = 255, 255, 255
+DEVICE_NAME = "/dev/robo"
+MAX_MOV = 10
 
 class Bomba(pygame.sprite.Sprite):
     def __init__(self, startpos):
@@ -45,7 +47,7 @@ class Robo(pygame.sprite.Sprite):
             self.rect.centery += 10
         
     def mov_up(self):
-        if self.rect.centery > 0:
+        if self.rect.centery > 20:
             self.rect.centery -= 10
 
 def load_image(name):
@@ -61,11 +63,20 @@ def draw_bomba(bomba):
     screen.blit(bomba.image, bomba.rect)
     pygame.display.flip()
 
-def draw_robo(robo):
+def draw_robo(robo, bomba):
     if bomba.rect.colliderect(robo.rect):
         bomba.kill_bomba()
     screen.blit(robo.image, robo.rect)
     pygame.display.flip()
+
+def readDriver():
+    # word = (char*) malloc(BUF_MSG);
+    file = open(DEVICE_NAME, 'r')
+
+    if file > 0:
+        word = file.read()
+        file.close()
+    return word
 
 def main():
    
@@ -73,30 +84,45 @@ def main():
     pygame.display.set_caption("Robo")
     clock = pygame.time.Clock()
     bomba = Bomba([100,100])
+    up = 0
+    down = 0
+    left = 0
+    right = 0
 
     screen.fill(black)
     done = True
-    draw_robo(robo)
+    draw_robo(robo, bomba)
     draw_bomba(bomba)
     # import ipdb; ipdb.set_trace();
     while done==True:
         for event in pygame.event.get():
             pass
-        
-        # key_pressed = pygame.key.get_pressed()
-        # if key_pressed[pygame.K_UP]:
-        #     robo.mov_up()
-        # elif key_pressed[pygame.K_DOWN]:
-        #     robo.mov_down()        
-        # elif key_pressed[pygame.K_a]:
-        #     robo.mov_left()
-        # elif key_pressed[pygame.K_z]:
-        #     robo.mov_right()     
-       
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            break
+
+        key_pressed = readDriver()
+        #key_pressed = pygame.key.get_pressed()
+        if key_pressed == 'u':
+            if up < MAX_MOV:
+                robo.mov_up()
+                up += 1
+        elif key_pressed == 'd':
+            if down < MAX_MOV:
+                robo.mov_down()
+                down += 1        
+        elif key_pressed == 'l':
+            if left < MAX_MOV:
+                robo.mov_left()
+                left += 1
+        elif key_pressed == 'r':
+            if right < MAX_MOV:
+                robo.mov_right()     
+                right += 1
         screen.fill(black)
-        draw_robo(robo)
+        draw_robo(robo, bomba)
         draw_bomba(bomba)
-        clock.tick(20)
+        clock.tick(60)
         # cc =raw_input()
         # done = False
 

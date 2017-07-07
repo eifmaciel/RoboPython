@@ -8,6 +8,9 @@ __pycache__/
 *.ko
 *.order
 *.symvers
+*.o
+driver.mod.o
+driver.mod.c
 .driver.ko.cmd
 .driver.mod.o.cmd
 .driver.o.cmd

@@ -2,6 +2,16 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.tmp_versions/
+
+*.cmd
+*.ko
+*.order
+*.symvers
+.driver.ko.cmd
+.driver.mod.o.cmd
+.driver.o.cmd
+
 
 # C extensions
 *.so
@@ -24,12 +34,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.tmp_versions/
 
-*.cmd
-*.ko
-*.order
-*.symvers
 
 
 # PyInstaller

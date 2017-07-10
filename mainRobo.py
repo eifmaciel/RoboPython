@@ -108,21 +108,13 @@ def main():
         key_pressed = readDriver()
         #key_pressed = pygame.key.get_pressed()
         if key_pressed == 'u':
-            if up < MAX_MOV:
-                robo.mov_up()
-                up += 1
+            robo.mov_up()
         elif key_pressed == 'd':
-            if down < MAX_MOV:
-                robo.mov_down()
-                down += 1
+            robo.mov_down()
         elif key_pressed == 'l':
-            if left < MAX_MOV:
-                robo.mov_left()
-                left += 1
+            robo.mov_left()
         elif key_pressed == 'r':
-            if right < MAX_MOV:
-                robo.mov_right()
-                right += 1
+            robo.mov_right()
         screen.fill(black)
         draw_robo(robo, bomba)
         draw_bomba(bomba)

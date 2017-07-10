@@ -16,6 +16,6 @@
     sudo rmmod driver.ko
     sudo rm /dev/robo
 
-# Startando a aplição
+# Startando a aplicação
     python2.7 mainTeclado.py
     python2.7 mainRobo.py

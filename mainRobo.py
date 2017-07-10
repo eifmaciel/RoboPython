@@ -2,6 +2,7 @@
 
 import sys, pygame, os
 import random
+import sys, traceback
 
 pygame.init()
 
@@ -45,7 +46,7 @@ class Robo(pygame.sprite.Sprite):
     def mov_down(self):
         if self.rect.centery < 350:
             self.rect.centery += 10
-        
+
     def mov_up(self):
         if self.rect.centery > 20:
             self.rect.centery -= 10
@@ -70,16 +71,19 @@ def draw_robo(robo, bomba):
     pygame.display.flip()
 
 def readDriver():
-    # word = (char*) malloc(BUF_MSG);
-    file = open(DEVICE_NAME, 'r')
+    try:
+        file = open(DEVICE_NAME, 'r')
 
-    if file > 0:
-        word = file.read()
-        file.close()
-    return word
+        if file > 0:
+            word = file.read()
+            file.close()
+        return word
+    except:
+        print "Problemas no acesso ao Driver."
+        print traceback.print_exc(file=sys.stdout)
 
 def main():
-   
+
     robo = Robo([width/2,height/2])
     pygame.display.set_caption("Robo")
     clock = pygame.time.Clock()
@@ -110,14 +114,14 @@ def main():
         elif key_pressed == 'd':
             if down < MAX_MOV:
                 robo.mov_down()
-                down += 1        
+                down += 1
         elif key_pressed == 'l':
             if left < MAX_MOV:
                 robo.mov_left()
                 left += 1
         elif key_pressed == 'r':
             if right < MAX_MOV:
-                robo.mov_right()     
+                robo.mov_right()
                 right += 1
         screen.fill(black)
         draw_robo(robo, bomba)

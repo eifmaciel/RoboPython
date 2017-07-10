@@ -1,6 +1,10 @@
 # coding: utf-8
 
 import sys, pygame, os
+import sys, traceback
+
+
+
 pygame.init()
 
 score = [0,0]
@@ -53,16 +57,20 @@ def load_image(name):
     return image, image.get_rect()
 
 def writeDriver(word):
-    file = open(DEVICE_NAME, 'w');
+    try:
+        file = open(DEVICE_NAME, 'w');
 
-    if (file > 0):
-        file.write(word)
-        file.close()
+        if (file > 0):
+            file.write(word)
+            file.close()
 
-    return 1
+        return 1
+    except:
+        print "Problemas no acesso ao Driver."
+        print traceback.print_exc(file=sys.stdout)
 
 def main():
-   
+
     left = Arowleft()
     right = ArowRight()
     down = ArowDown()
@@ -84,18 +92,18 @@ def main():
         event = pygame.event.wait()
         if event.type == pygame.QUIT:
             break
-        
+
         key_pressed = pygame.key.get_pressed()
         if key_pressed[pygame.K_UP]:
             writeDriver('u')
         elif key_pressed[pygame.K_DOWN]:
-            writeDriver('d')        
+            writeDriver('d')
         elif key_pressed[pygame.K_LEFT]:
             writeDriver('l')
         elif key_pressed[pygame.K_RIGHT]:
-            writeDriver('r')    
-             
-       
+            writeDriver('r')
+
+
         clock.tick(60)
         # cc =raw_input()
         # done = False
